@@ -1,0 +1,20 @@
+.card-style{
+    margin: 12px;
+    border-radius: 12px;
+    min-width: 200px;
+    max-width: 200px;
+
+    border: 2px solid transparent;
+    
+    transition: border-color 250ms ease-in-out;
+}
+
+.card-style:hover{
+    border-color: lightgreen;
+}
+
+.card-style:focus,
+.card-style:focus-visible{
+    outline: 4px auto -webkit-focus-ring-color;
+    transition: all 2000ms;
+}

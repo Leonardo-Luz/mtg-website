@@ -1,0 +1,46 @@
+
+.alert-container{
+    width: 40%;
+
+    position: absolute;
+    top: center;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    background-color: rgb(66, 66, 66);
+    border-radius: 14px;
+
+    padding: 12px;
+}
+
+.alert-division{
+    width: 100%;
+
+    border: none;
+    outline: 1px solid wheat;
+}
+
+.alert-close{
+    width: 10%;
+    align-self: flex-end;
+}
+
+.alert-data{
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+
+    gap: 12px;
+}
+
+.alert-data img{
+    max-width: 340px;
+
+    border-radius: 11px;
+}

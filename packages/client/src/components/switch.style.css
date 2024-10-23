@@ -1,0 +1,41 @@
+
+.change-theme{
+    cursor: pointer;
+
+    width: 70px;
+    height: 35px;
+    padding: 5px;
+    border-radius: 20px;
+    background-color: lightblue;
+    display: flex;
+    align-items: center;
+
+    position: relative;
+}
+
+.checkbox-change-theme:checked ~ .change-theme{
+    background-color: gray;
+}
+
+.checkbox-change-theme:checked ~ .change-theme .change-theme-img{
+    left: 52%;
+    filter: invert(1);
+}
+
+.checkbox-change-theme{
+    display: none;
+}
+
+.change-theme-img{
+    position: absolute;
+    left: 8%;
+
+    padding: 6px;
+
+    width: 22px;
+    height: 22px;
+    background-color: rgb(235, 235, 172);
+    border-radius: 100%;
+
+    transition: 320ms ease-in-out;
+}

@@ -78,7 +78,7 @@ export const Home = () => {
                 <Alertbox setAlert={setAlertActive}>
                     <img src={card.imageUrl} alt="Foda" />
                     <button
-                        onClick={() => navigate(`/card/${card.name}/${card.id}`)}
+                        onClick={() => card ? navigate(`/card/${card.name}/${card.id}`) : alert("Carta não possui ID válido!")}
                     >Mais detalhes</button>
                 </Alertbox>
             }

@@ -3,6 +3,8 @@ import CardService from "../service/cards.service";
 import { useEffect, useState } from "react";
 import { card } from "../types";
 
+import placeholder from "../images/placeholder.jpg"
+
 export const Card = () => {
     const { name, id } = useParams();
 
@@ -47,18 +49,25 @@ export const Card = () => {
                         justifyContent: "center",
                         width: "80%"
                     }}>
-                        <img style={{borderRadius: "12px"}} src={card.imageUrl ? card.imageUrl : undefined} alt={card.name + " image"} />
+                    {
+                        card != undefined ?
+                        <>
+                            <img style={{borderRadius: "12px", maxWidth: "300px"}} src={card.imageUrl ? card.imageUrl : placeholder} alt={card.name + " image"} />
 
-                        <div style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "8px",
-                            width: "60%"
-                        }}>
-                            <p>{card.name ? card.name : "unknown"}</p>
-                            <p>{card.type ? card.type : "unknown"}</p>
-                            <p>{card.text ? card.text : "unknown"}</p>
-                        </div>
+                            <div style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: "8px",
+                                width: "60%"
+                            }}>
+                                <p>{card.name ? card.name : "unknown"}</p>
+                                <p>{card.type ? card.type : "unknown"}</p>
+                                <p>{card.text ? card.text : "unknown"}</p>
+                            </div>
+                        </>
+                        :
+                        <p>Error, Card with corrupted ID!</p>
+                    }
                     </div>
                 )
                 :

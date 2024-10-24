@@ -4,9 +4,15 @@ import CardService from "../service/cards.service";
 import { card } from "../types";
 import { Switch } from "./Switch.component";
 
+import "./navbar.style.css"
+
+import logo from "../images/logo.webp"
+
 export const Navbar = () => {
 
     const timeout = useRef<number>();
+    const search = useRef<HTMLInputElement>(null);
+
     const [ target, setTarget ] = useState<string>()
     const [ found, setFound ] = useState<card[]>()
     const [ loading, setLoading ] = useState(false);
@@ -17,13 +23,18 @@ export const Navbar = () => {
     const searchChangeHandler = ( event: ChangeEvent<HTMLInputElement> ) => {
         const search = event.currentTarget.value;
 
+        setLoading(true)
+
         timeout.current && clearTimeout(timeout.current)
 
-        search == "" ? setTarget(undefined)
-        :
-        timeout.current = setTimeout(() => {
-            setTarget(search)            
-        }, 500);
+        if(search == ""){
+            setTarget(undefined)
+            setLoading(false)
+        } 
+        else
+            timeout.current = setTimeout(() => {
+                setTarget(search)            
+            }, 500);
     }
     
 
@@ -71,6 +82,7 @@ export const Navbar = () => {
     useEffect(() => {
         if(!target){
             setFound(undefined)
+            setLoading(false)
         }
         else{
             setLoading(true)
@@ -78,33 +90,35 @@ export const Navbar = () => {
         }
     }, [target])
 
+    useEffect(() => {
+        const clickOutsideHandler = ( event: any ) => {
+            (search.current && !search.current.contains(event.target)) && setFound(undefined)
+        }
+
+        document.addEventListener("mousedown", clickOutsideHandler);
+
+        return(() => document.removeEventListener("mousedown", clickOutsideHandler))
+    }, [search])
+
     return(
         <div
-            style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "18px",
-                boxShadow: "0px 0px 10px 4px black"
-            }}
+            className="navbar-container"
         >
             <img 
-                style={{
-                    width: "20%"
-                }}
+                className="navbar-logo"
                 onClick={() => navigate('/')} 
-                src="#" 
+                src={logo} 
             />
-            <div>
+            <div
+                className="navbar-search-container"
+            >
                 <input 
+                    ref={search}
                     onChange={searchChangeHandler}
                     onKeyDown={searchEnterHandler}
                     type="search" 
                     placeholder="search..."
-                    style={{
-                        width: "100%"
-                    }}
+                    className="navbar-search-input"
                 />
                 {
                     !loading ?
@@ -112,35 +126,46 @@ export const Navbar = () => {
                         found &&
                         (
                             found.length > 0 ?
-                            <div style={{
-                                position: "absolute",
-                                display: "flex",
-                                flexDirection: "column",
-                                backgroundColor: "darkslategray",
-                                gap: "4px",
-                                width: "14%"
-                            }}>
+                            <div
+                                className="navbar-search-list"
+                            >
                             {
                                     found.map((card, index) => <Link 
                                             to={`/card/${card.name}`}
-                                            style={ index == current ? { color: "white"} : {backgroundColor: "black"}}
+                                            className="navbar-search-link"
+                                            style={ 
+                                                index == current ? 
+                                                    { 
+                                                        color: "white", 
+                                                        backgroundColor: "darkgoldenrod"
+                                                    }
+                                                : {}
+                                            }
                                         >{card.name}</Link>)
                             } 
-                            </div> : "NOT FOUND"
+                            </div> :
+                            <div
+                                className="navbar-search-list"
+                            >
+                                <p className="navbar-search-link">
+                                    Card not found!
+                                </p>
+                            </div>
                         )
                     )
                     :
-                    "Loading"
+                    <div
+                        className="navbar-search-list"
+                    >
+                        <p className="navbar-search-link">
+                            Loading...
+                        </p>
+                    </div>
                 }
             </div>
             <Switch />
             <div
-                style={{
-                    width: "20%",
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: "12px"
-                }}
+                className="navbar-buttons-container"
             >
                 <button>Register</button>
                 <button>Login</button>

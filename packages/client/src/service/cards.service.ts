@@ -37,7 +37,7 @@ class Service{
         return (await response.json()) as Promise<cardResponse>
     }
 
-    public get = async ( target?: string ): Promise<cardResponse> => target ? this.getTarget( target ) : this.getAll()    
+    public get = async ( target?: string ): Promise<cardResponse> => target ? this.getTarget( target ) : this.getAll()
 
     public search =  async ( search: string ): Promise<cardResponse> => {
         const response = await fetch(`${this.apiRoute}?${new URLSearchParams({
